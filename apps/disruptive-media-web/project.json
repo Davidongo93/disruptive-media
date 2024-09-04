@@ -1,0 +1,9 @@
+{
+  "name": "disruptive-media-web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/disruptive-media-web",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project disruptive-media-web --web",
+  "targets": {}
+}
