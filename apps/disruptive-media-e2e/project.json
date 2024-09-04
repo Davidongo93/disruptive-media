@@ -1,0 +1,17 @@
+{
+  "name": "disruptive-media-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "implicitDependencies": ["disruptive-media"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
+      "options": {
+        "jestConfig": "apps/disruptive-media-e2e/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "dependsOn": ["disruptive-media:build"]
+    }
+  }
+}
