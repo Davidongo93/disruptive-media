@@ -1,17 +1,12 @@
-import User from '../models/User';
+import User from '../models/user';
 
-export const createUserService = async ({ userName, email, roles }: { userName: string, email: string, roles: string[] }) => {
-  try {
+export const createUserService = async ({ username, email, roles }: { username: string, email: string, roles: string[] }) => {
+
     const newUser = new User({
-      userName,
+      username,
       email,
       roles,
     });
     await newUser.save();
     return newUser;
-    
-  } catch (error) {
-    
-    throw error;
-  }
 };
