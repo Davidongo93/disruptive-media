@@ -1,21 +1,19 @@
-import express from 'express';
-import connectDB from './models';
+import connectDB from './models'; // Cambia a la ruta correcta de tu archivo de conexión
+import router from './routes'; // Asegúrate de que tu archivo de rutas esté correctamente exportado
+import app from './app';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3001;
 
-const app = express();
 
-app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send({ message: 'Hello API' });
-});
-
+// Inicializar base de datos y servidor
 const startServer = async () => {
   try {
+    // Conectar a MongoDB
     await connectDB();
-    
+app.use('/',router)
+    // Iniciar servidor
     app.listen(port, host, () => {
       console.log(`[ ready ] http://${host}:${port}`);
     });
