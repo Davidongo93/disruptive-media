@@ -3,8 +3,15 @@ import { createUserService, getUsersService } from '../services/userService';
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { username, email, roles } = req.body;
-    const newUser = await createUserService({ username, email, roles });
+    const { username, email} = req.body;
+    let {role} = req.body
+    // While implement JWT
+    const adminEmail = process.env.EMAIL_ADMIN;
+    if (adminEmail) {
+      email === adminEmail? role = "admin":role;  
+    } 
+    console.log(role, req.body,adminEmail)
+    const newUser = await createUserService({ username, email, role });
     res.status(201).json(newUser);
   } catch (error) {
     console.error(error);
