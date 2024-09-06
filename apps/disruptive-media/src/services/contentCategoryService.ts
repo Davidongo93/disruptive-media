@@ -1,8 +1,9 @@
-import ContentCategory from "../models/contentCategory";
+import contentCategory from "../models/contentCategory";
 
 export const createContentCategoryService = async ({ name, coverImage }: {name: string, coverImage: string}) => {
-name = name.toLowerCase()
-    const newCategory = new ContentCategory({ name, coverImage });
-    await newCategory.save();
-    return newCategory;
+
+  const newCategory = new contentCategory({ name, coverImage });
+  await newCategory.save();
+
+  return newCategory;
 };
