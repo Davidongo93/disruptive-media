@@ -3,14 +3,6 @@ import jwt from 'jsonwebtoken';
 import user from '../models/user';
 
 const secretKey = process.env.SECRET_JWT as string;
-//TODO set as types in types folder
-declare global {
-    namespace Express {
-        interface Request {
-            user? : any
-        }
-    }
-  }
 
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];
