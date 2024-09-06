@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createContentCategoryService } from '../services/contentCategoryService'
+import { createContentCategoryService, getContentCategoriesService } from '../services/contentCategoryService'
 
 const createContentCategory = async (req: Request, res: Response) => {
   const { name, coverImage } = req.body;
@@ -13,4 +13,15 @@ const createContentCategory = async (req: Request, res: Response) => {
     res.status(500).json({message});
   }
 };
-export {createContentCategory};
+const getContentCategories = async (req: Request, res: Response) => {
+  try {
+    
+    const getCategories = await getContentCategoriesService();
+    res.status(201).json(getCategories);
+  } catch (error) {
+    console.error(error);
+   const message = error.message? error.message:`cannot create new category: ${name}`
+    res.status(500).json({message});
+  }
+};
+export {createContentCategory, getContentCategories};

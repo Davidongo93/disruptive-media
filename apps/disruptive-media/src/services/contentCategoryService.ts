@@ -7,3 +7,8 @@ export const createContentCategoryService = async ({ name, coverImage }: {name: 
 
   return newCategory;
 };
+export const getContentCategoriesService = async () => {
+
+ const getCategories = await contentCategory.find({});
+  return getCategories;
+};
