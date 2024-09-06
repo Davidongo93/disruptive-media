@@ -22,3 +22,10 @@ export const createContentTopicService = async ({ name, categoriesAllowed }: { n
 
   return newTopic;
 };
+
+export const getContentTopicService = async () => {
+ 
+  const getTopics = await contentTopic.find();
+
+  return getTopics;
+};
