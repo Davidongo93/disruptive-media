@@ -7,8 +7,9 @@ const createUser = async (req: Request, res: Response) => {
     const newUser = await createUserService({ username, email, roles });
     res.status(201).json(newUser);
   } catch (error) {
-    console.error(error.errorResponse.errmsg);
-    res.status(500).json({message: error.errorResponse.errmsg.slice(7,37)});
+    console.error(error);
+   const message = error.message? error.message:`cannot create new user`
+   res.status(400).json({message})
   }
 };
 
