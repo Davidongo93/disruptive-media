@@ -19,7 +19,6 @@ const contentSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: async function(value: mongoose.Types.ObjectId) {
-        // Obtén el tema usando el `topicId` y verifica si la categoría es permitida.
         const topic = await contentTopic.findById(this.topic);
         if (!topic) {
           throw new Error('El tema no es válido.');
