@@ -5,9 +5,7 @@ const secretKey = process.env.SECRET_JWT as string;
 
 const loginUser = async (username: string, email: string): Promise<string | null> => {
   try {
-    const loggedUser = await user.findOne({
-      $or: [{ email: email }, { username: username }]
-    });
+    const loggedUser = await user.findOne({ email: email, username: username});
 
     if (!loggedUser) {
       return null;
