@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
+import useSession from './hooks/UseSession';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -11,16 +12,17 @@ const LoginForm = () => {
   const [avatar, setAvatar] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const isLoggedIn = useSession();
 
   useEffect(() => {
-    const savedToken = localStorage.getItem('token');
-    if (savedToken) {
+    if (isLoggedIn) {
+      const savedToken = localStorage.getItem('token');
       setToken(savedToken);
       setAvatar('/avatar.svg');
     }
 
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50); // Si el scroll es mayor que 50px, aplicar blur
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -62,7 +64,6 @@ const LoginForm = () => {
 
   return (
     <div>
-      {/* Botón o avatar que cambia en función del token */}
       {!token ? (
         <button
           className={`fixed bottom-5 right-5 ${isScrolled ? 'bg-blue-900 bg-opacity-50 backdrop-blur-md' : 'bg-blue-900'} text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-opacity duration-300`}

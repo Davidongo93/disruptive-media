@@ -1,4 +1,153 @@
-# DisruptiveMedia
+# Disruptive Media API
+
+Este repositorio contiene una colección de endpoints para interactuar con una API que gestiona usuarios, categorías, temas y publicaciones.
+
+## Endpoints
+
+### 1. **Create User**
+
+- **URL**: `localhost:3001/user`
+- **Método**: `POST`
+- **Descripción**: Crea un nuevo usuario en la plataforma.
+- **Headers**:
+  - `Content-Type: application/json`
+- **Body**:
+  ```json
+  {
+    "username": "sudo Dave",
+    "email": "domirandar@unal.edu.co"
+  }
+  ```
+  
+### 2. **Login**
+
+- **URL**: `localhost:3001/login`
+- **Método**: `POST`
+- **Descripción**: Autentica a un usuario con las credenciales proporcionadas.
+- **Headers**:
+  - `Content-Type: application/json`
+- **Body**:
+  ```json
+  {
+    "username": "sudo Dave",
+    "email": "domirandar@unal.edu.co"
+  }
+  ```
+
+### 3. **GET Users**
+
+- **URL**: `localhost:3001/users`
+- **Método**: `GET`
+- **Descripción**: Obtiene la lista de todos los usuarios registrados. Requiere autenticación Bearer Token.
+- **Headers**:
+  - `Content-Type: application/json`
+  - `Authorization: Bearer <token>`
+
+### 4. **Create Category**
+
+- **URL**: `localhost:3001/category`
+- **Método**: `POST`
+- **Descripción**: Crea una nueva categoría.
+- **Headers**:
+  - `Content-Type: application/json`
+  - `Authorization: Bearer <token>`
+- **Body**:
+  ```json
+  {
+    "name": "image",
+    "coverImage": "https://images.unsplash.com/photo-1541516160071-4bb0c5af65ba"
+  }
+  ```
+
+### 5. **GET Categories**
+
+- **URL**: `localhost:3001/categories`
+- **Método**: `GET`
+- **Descripción**: Obtiene la lista de todas las categorías. Requiere autenticación Bearer Token.
+- **Headers**:
+  - `Content-Type: application/json`
+  - `Authorization: Bearer <token>`
+
+### 6. **Create Topic**
+
+- **URL**: `localhost:3001/topic`
+- **Método**: `POST`
+- **Descripción**: Crea un nuevo tema, asociado a una o más categorías.
+- **Headers**:
+  - `Content-Type: application/json`
+  - `Authorization: Bearer <token>`
+- **Body**:
+  ```json
+  {
+    "name": "art gallery",
+    "categoriesAllowed": ["image"]
+  }
+  ```
+
+### 7. **GET Topics**
+
+- **URL**: `localhost:3001/topics`
+- **Método**: `GET`
+- **Descripción**: Obtiene la lista de todos los temas. Requiere autenticación Bearer Token.
+- **Headers**:
+  - `Content-Type: application/json`
+  - `Authorization: Bearer <token>`
+
+### 8. **Create Post**
+
+- **URL**: `localhost:3001/posts`
+- **Método**: `POST`
+- **Descripción**: Crea una nueva publicación asociada a un tema y categoría.
+- **Headers**:
+  - `Content-Type: application/json`
+  - `Authorization: Bearer <token>`
+- **Body**:
+  ```json
+  {
+    "title": "Como conseguir mayores visitas al portafolio",
+    "topicId": "66db93e937633697118f80e6",
+    "categoryId": "66db938537633697118f80de",
+    "url": "Crea un portafolio en NextJs, aprende React, come, duerme, repite."
+  }
+  ```
+
+### 9. **GET Posts**
+
+- **URL**: `localhost:3001/posts`
+- **Método**: `GET`
+- **Descripción**: Obtiene la lista de todas las publicaciones. Requiere autenticación Bearer Token.
+- **Headers**:
+  - `Content-Type: application/json`
+  - `Authorization: Bearer <token>`
+
+### 10. **GET Avatar**
+
+- **URL**: `https://avatar.iran.liara.run/public`
+- **Método**: `GET`
+- **Descripción**: Endpoint público para obtener información del avatar.
+- **Headers**:
+  - `User-Agent: insomnia/9.3.3`
+
+## Requisitos
+
+- Para interactuar con la API, es necesario un token JWT en algunos de los endpoints. Asegúrate de enviar el token de autenticación en el encabezado `Authorization` con el formato `Bearer <token>`.
+  
+## Instalación
+
+1. Clona este repositorio.
+2. Instala las dependencias necesarias con:
+   ```bash
+   npm install
+   ```
+3. Corre el servidor de desarrollo:
+```sh
+npx nx serve disruptive-media
+ nx run disruptive-media-web:dev
+```
+
+## Autores
+
+- David Miranda - [domirandar@unal.edu.co](mailto:domirandar@unal.edu.co)
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
