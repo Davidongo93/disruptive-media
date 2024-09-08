@@ -51,7 +51,7 @@ export const getContents = async ({ topic, title, page, limit, sort, order }: Ge
 
   const skip = (page - 1) * limit;
 
-  const contents = await Content.find(query)
+  const posts = await Content.find(query)
     .sort({ [sort]: order === 'asc' ? 1 : -1 })
     .skip(skip)
     .limit(limit)
@@ -90,7 +90,7 @@ export const getContents = async ({ topic, title, page, limit, sort, order }: Ge
   ]);
 
   return {
-    contents,
+    posts,
     total: totalContents,
     categoriesSummary: categoryCounts
   };
