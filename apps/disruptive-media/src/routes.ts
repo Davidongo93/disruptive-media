@@ -16,6 +16,6 @@ router.get('/categories', getContentCategories);
 router.post('/topic', authMiddleware, createContentTopic);
 router.get('/topics', getContentTopics);
 router.post('/posts', authMiddleware, createContent);
-router.get('/posts', authMiddleware, getContentsController);
+router.get('/posts', getContentsController);
 
 export default router;
