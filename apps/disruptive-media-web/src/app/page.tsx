@@ -1,9 +1,13 @@
 'use client'
 import { useState } from "react";
+import UseSession from "./components/hooks/UseSession";
 import CategoriesCarousel from "./components/CategoriesCarousel";
 import LoginForm from "./components/LoginForm";
 import PostGrid from "./components/PostGrid";
 import Header from "./components/header/Header";
+import PostForm from "./components/postForm/PostForm";
+
+
 
 export default function Index() {
   const [filters, setFilters] = useState({
@@ -24,11 +28,12 @@ export default function Index() {
   return (
     <div>
       <div className="wrapper">
-        <CategoriesCarousel/>
-        <Header onFilterChange={handleFilterChange} />
-        <PostGrid filters={filters} />
-        <LoginForm/>
-        <LoginForm/>
+        {/* <CategoriesCarousel/>
+        <Header onFilterChange={handleFilterChange} /> */}
+        <PostGrid/>
+
+      <PostForm/>}
+      <LoginForm/>
       </div>
     </div>
   );
