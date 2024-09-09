@@ -11,7 +11,7 @@ const loginUser = async (username: string, email: string): Promise<string | null
       return null;
     }
 
-    const token = jwt.sign({ userId: loggedUser._id }, secretKey, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: loggedUser._id }, secretKey);
 
     return token;
   } catch (error) {
