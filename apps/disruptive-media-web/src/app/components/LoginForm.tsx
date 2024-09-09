@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-import useSession from './hooks/UseSession';
+import UseSession from './hooks/UseSession';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -12,7 +12,8 @@ const LoginForm = () => {
   const [avatar, setAvatar] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const isLoggedIn = useSession();
+  const [isNewUser, setIsNewUser] = useState(false);
+  const isLoggedIn = UseSession();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -34,7 +35,6 @@ const LoginForm = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
 
     try {
       const response = await axios.post('http://localhost:3001/login', {
@@ -46,7 +46,8 @@ const LoginForm = () => {
       localStorage.setItem('token', token);
       setToken(token);
       setAvatar('/avatar.svg');
-
+      // UseSession();
+      setError('');
       setIsModalOpen(false);
     } catch (error) {
       setError('Invalid username or email');
@@ -55,11 +56,44 @@ const LoginForm = () => {
       setLoading(false);
     }
   };
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+console.log("Handle sign In", username);
 
+    try {
+      const newAccount = await axios.post("http://localhost:3001/user", {
+        username,
+        email,
+      })
+      if (newAccount) {
+        console.log("Handle sign In", newAccount);
+setIsNewUser(false);
+setError('');
+      }
+      // UseSession();
+
+    } catch (error) {
+      setError('User already exists');
+      console.error('Error during signing in:', error);
+      setUsername('');
+      setEmail('');
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken(null);
+    UseSession();
     setAvatar(null);
+    setError('');
+  };
+  const handleRegister = () => {
+    setIsNewUser(true);
+    setUsername('');
+    setEmail('');
+    setError('');
   };
 
   return (
@@ -70,7 +104,7 @@ const LoginForm = () => {
           onClick={() => setIsModalOpen(true)}
         >
           {/* Icono de login */}
-          <span className="text-2xl font-bold">+</span>
+          <span className="text-2xl font-bold">start</span>
         </button>
       ) : (
         <div
@@ -116,8 +150,10 @@ const LoginForm = () => {
             ) : (
               // Modal de login si el usuario no está logueado
               <div>
-                <h2 className="text-xl font-semibold text-center mb-4">Login</h2>
-                <form onSubmit={handleLogin} className="bg-white rounded px-8 pt-6 pb-8 mb-4">
+                {isNewUser?<h2 className="text-xl font-semibold text-center mb-4">Create a new account</h2>:
+                  <h2 className="text-xl font-semibold text-center mb-4">Login</h2>}
+              
+                <form onSubmit={isNewUser?handleSignIn:handleLogin} className="bg-white rounded px-8 pt-6 pb-8 mb-4">
                   <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                       Username
@@ -144,22 +180,34 @@ const LoginForm = () => {
                       required
                     />
                   </div>
-                  {error && <p className="text-red-500 text-xs italic">{error}</p>}
+                  {error &&
+                   <p className="text-red-500 text-xs italic">{error}</p>
+                   }
                   <div className="flex items-center justify-between">
                     <button
                       type="submit"
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                       disabled={loading}
                     >
-                      {loading ? 'Logging in...' : 'Login'}
+                      {loading ? 'Logging in...' :isNewUser? 'Sign in':'Login'}
                     </button>
+                    {!isNewUser&& <p><button
+                   className='text-blue-500 text-xs m-5'
+                   onClick={handleRegister}
+                   >Need an account?</button></p>
+                   }
+                    {isNewUser ? <p><button
+                   className='text-blue-500 text-xs m-5'
+                   onClick={() => setIsNewUser(false)}
+                   >login</button></p>:<></>}
                   </div>
                 </form>
               </div>
             )}
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => {setIsModalOpen(false);
+                 setError('');}}
             >
               &times;
             </button>

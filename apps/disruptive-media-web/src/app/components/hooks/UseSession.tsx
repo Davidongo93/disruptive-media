@@ -1,20 +1,14 @@
 import { useEffect, useState } from 'react';
 
-const useSession = () => {
+const UseSession = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-      console.log("useSession:true");
-      
-    } else {
-      setIsLoggedIn(false);
-    }  console.log("useSession:true");
+    setIsLoggedIn(!!token);
   }, []);
 
   return isLoggedIn;
 };
 
-export default useSession;
+export default UseSession;
